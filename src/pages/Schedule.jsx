@@ -1,3 +1,7 @@
 export default function Schedule() {
-  return <h2>Schedule</h2>;
+  return (
+    <div className="bg-lime-300 flex-1">
+      <h2>Messages</h2>
+    </div>
+  );
 }

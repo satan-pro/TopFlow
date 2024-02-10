@@ -30,7 +30,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex w-full h-screen">
       <Navbar />
       <Component />
     </div>

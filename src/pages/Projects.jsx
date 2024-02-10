@@ -1,3 +1,7 @@
 export default function Projects() {
-  return <h2>Projects</h2>;
+  return (
+    <div className="bg-yellow-300 flex-1">
+      <h2>Projects</h2>
+    </div>
+  );
 }
