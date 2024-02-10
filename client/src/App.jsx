@@ -1,5 +1,4 @@
-import Navbar from "./components/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Jamming from "./pages/Jamming";
 import Messages from "./pages/Messages";
@@ -30,8 +29,8 @@ export default function App() {
   }
 
   return (
-    <div className="flex w-full h-screen">
-      <Navbar />
+    <div className="flex">
+      <Sidebar />
       <Component />
     </div>
   );
