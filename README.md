@@ -1,5 +1,5 @@
 # Project-Pilot
-Clone this project to ypour local machine
+Clone this project to your local machine
 
 ### Create a React App
 Use the following command on your terminal : `npx create-react-app project-pilot`
