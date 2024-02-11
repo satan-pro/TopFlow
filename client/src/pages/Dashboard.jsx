@@ -4,6 +4,8 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { CircularProgress, CircularProgressLabel, Progress } from "@chakra-ui/react";
 import { Calendar } from "react-calendar";
 import axios from "axios";
+import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { Calendar } from "react-calendar";
 import graph_img from "../assets/graph.png";
 
 function Searchbar() {
@@ -49,6 +51,15 @@ function Searchbar() {
 } */
 
 /* function SmallCardView() {
+function SmallCard({ bgColor }) {
+  return (
+    <div
+      className={`${bgColor} inline-block w-48 h-48 rounded-xl duration-300 hover:-translate-y-1 hover:shadow-md hover:shadow-gray-500 `}
+    ></div>
+  );
+}
+
+function SmallCardView() {
   return (
     <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2 ">
       <SmallCard bgColor="bg-lime-300" />
@@ -85,17 +96,23 @@ function MyProgress() {
 
   const cardColors = ["bg-lime-300", "bg-lime-300", "bg-sky-300"];
 
+}
+
+function Progress() {
   return (
     <div>
-      <h1 className="text-2xl font-semibold my-2">My Progress</h1>
-      <div className="flex bg-indigo-950 w-full p-4 h-64 rounded-lg text-white">
+      <h1 className="text-2xl font-semibold my-8">My Progress</h1>
+      <div className="flex border-box bg-indigo-950 w-full p-4 h-64 rounded-lg text-white">
         <div className="w-1/2">
           <h1 className="text-xl">Hi John!</h1>
           <p className="text-5xl mb-8 mt-8">
             You have completed {getData.completed && getData.completed.length>0? getData.completed[0].completedTasks : 0} tasks
             this week
           </p>
-          <a className="bg-white rounded-2xl px-4 text-indigo-950 p-1" href="/">
+          <a
+            className="bg-white rounded-2xl px-4 text-indigo-950 p-1 hover:border-2 duration-400"
+            href="/"
+          >
             See All <i class="ri-arrow-right-up-line"></i>
           </a>
         </div>
@@ -116,6 +133,8 @@ function MyProgress() {
               );
             })):null}
           </div>
+        <div className="w-1/2 bg-indigo-950 overflow-x-hidden overflow-y-hidden whitespace-nowrap">
+          <SmallCardView />
         </div>
       </div>
     </div>
@@ -290,6 +309,7 @@ export default function Dashboard() {
     <div className="flex-1 h-screen p-4 overflow-scroll bg-gray-100">
       <Searchbar className="w-full" />
       <MyProgress />
+      <Progress />
       <div className="flex w-full justify-between  space-x-4">
         <div className="flex-col w-4/6">
           <Statistics />

@@ -14,11 +14,13 @@ export default function Sidebar() {
 
   return (
     <aside className="flex-col h-screen w-64 m-4 mr-0 text-slate-500 space-y-36">
+    <aside className="flex-col h-screen w-64 m-4 text-slate-500 space-y-36">
       <a href="/" className="text-2xl font-semibold">
         TopFlow
       </a>
       <ul className="flex-col space-y-8 text-md font-semibold">
         <li className="flex gap-x-2 bg-gray-100 p-4 rounded-l-full">
+        <li className="flex gap-x-2 ">
           <i className="ri-bar-chart-box-fill"></i>
           <a href="dashboard" onClick={handleSetSelected}>
             Dashboard
