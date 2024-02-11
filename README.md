@@ -8,7 +8,7 @@ Clone this project to your local machine : `git clone git@github.com:satan-pro/P
 
 ### Create a React App
 
-Use the following command on your terminal : `npx create-react-app project-pilot`
+Use the following command on your terminal : `npm create vite@latest project-pilot`
 
 ### Add React Dependencies
 
