@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { CircularProgress, CircularProgressLabel, Progress } from "@chakra-ui/react";
+import axios from "axios";
 
 function Searchbar() {
   const [searchValue, setSearchValue] = useState("");
@@ -37,7 +38,31 @@ function Searchbar() {
   );
 }
 
-function Progress() {
+function ProgressCard(props) {
+  return (
+    <div className="flex flex-col p-6 justify-end inline-block bg-red-400 w-48 rounded-xl gap-3">
+      <h1 className="text-2xl text-black font-bold">{props.heading}</h1>
+      <div className="flex flex-row text-sm justify-start gap-1">
+        <p className="inline-block text-black font-semibold">{props.tasks} tasks | </p>
+        <p className="inline-block text-black font-semibold">{props.percentComplete} %</p>
+      </div>
+      <Progress value={props.percentComplete} size='xs' colorScheme="blackAlpha"/>
+    </div>
+  );
+}
+
+function MyProgress() {
+  const [getData, setGetData] = useState([{}]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/dashboard").then((response) => {
+      setGetData(response.data.userData);
+      /*  console.log(response.data.userData); */
+    });
+  }, []);
+
+  console.log(getData);
+
   return (
     <div>
       <h1 className="text-2xl font-semibold my-2">My Progress</h1>
@@ -45,21 +70,33 @@ function Progress() {
         <div className="w-1/2">
           <h1 className="text-xl">Hi John!</h1>
           <p className="text-5xl mb-8 mt-8">
-            You have completed X projects this week
+            You have completed {getData.completed && getData.completed.length>0? getData.completed[0].completedTasks : 0} tasks
+            this week
           </p>
           <a className="bg-white rounded-2xl px-4 text-indigo-950 p-1" href="/">
             See All <i class="ri-arrow-right-up-line"></i>
           </a>
         </div>
         <div className="w-1/2 bg-indigo-950 m-4 flex gap-x-2 overflow-x-hidden overflow-y-hidden whitespace-nowrap">
-          <div className="inline-block bg-lime-400 w-48 rounded-xl"></div>
+          {/* <div className="inline-block bg-lime-400 w-48 rounded-xl"></div>
           <div className="inline-block bg-red-400 w-48 rounded-xl"></div>
-          <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div>
+          <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div> */}
+          {getData.completed && getData.completed.length>0? (getData.completed.map((user, index) => {
+            return (
+              <ProgressCard
+                key={index}
+                heading={user.title}
+                tasks={user.tasks}
+                percentComplete={(user.completedTasks / user.tasks) * 100}
+              />
+            );
+          })):null}
         </div>
       </div>
     </div>
   );
 }
+
 function Statistics() {
   return (
     <div>
@@ -116,7 +153,7 @@ export default function Dashboard() {
         <MyCard />
       </div> */}
       <Searchbar className="w-full" />
-      <Progress />
+      <MyProgress />
       <Statistics />
     </div>
   );
