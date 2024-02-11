@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { CircularProgress, CircularProgressLabel, Progress } from "@chakra-ui/react";
+import { Calendar } from "react-calendar";
 import axios from "axios";
+import graph_img from "../assets/graph.png";
 
 function Searchbar() {
   const [searchValue, setSearchValue] = useState("");
@@ -38,15 +40,33 @@ function Searchbar() {
   );
 }
 
+/* function SmallCard({ bgColor }) {
+  return (
+    <div
+      className={`${bgColor} inline-block w-48 h-48 rounded-xl `}
+    ></div>
+  );
+} */
+
+/* function SmallCardView() {
+  return (
+    <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2 ">
+      <SmallCard bgColor="bg-lime-300" />
+      <SmallCard bgColor="bg-red-300" />
+      <SmallCard bgColor="bg-sky-300" />
+    </div>
+  );
+} */
+
 function ProgressCard(props) {
   return (
-    <div className="flex flex-col p-6 justify-end inline-block bg-red-400 w-48 rounded-xl gap-3">
+    <div className={`${props.cardColor} flex flex-col p-6 justify-end inline-block bg-red-400 w-48 h-44 rounded-xl gap-3 duration-300 hover:-translate-y-1 hover:shadow-md hover:shadow-gray-500`}>
       <h1 className="text-2xl text-black font-bold">{props.heading}</h1>
       <div className="flex flex-row text-sm justify-start gap-1">
         <p className="inline-block text-black font-semibold">{props.tasks} tasks | </p>
-        <p className="inline-block text-black font-semibold">{props.percentComplete} %</p>
+        <p className="inline-block text-black font-semibold">{Math.floor(props.percentComplete)} %</p>
       </div>
-      <Progress value={props.percentComplete} size='xs' colorScheme="blackAlpha"/>
+      <Progress value={props.percentComplete} size='xs' colorScheme="purple"/>
     </div>
   );
 }
@@ -62,6 +82,8 @@ function MyProgress() {
   }, []);
 
   console.log(getData);
+
+  const cardColors = ["bg-lime-300", "bg-lime-300", "bg-sky-300"];
 
   return (
     <div>
@@ -81,16 +103,19 @@ function MyProgress() {
           {/* <div className="inline-block bg-lime-400 w-48 rounded-xl"></div>
           <div className="inline-block bg-red-400 w-48 rounded-xl"></div>
           <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div> */}
-          {getData.completed && getData.completed.length>0? (getData.completed.map((user, index) => {
-            return (
-              <ProgressCard
-                key={index}
-                heading={user.title}
-                tasks={user.tasks}
-                percentComplete={(user.completedTasks / user.tasks) * 100}
-              />
-            );
-          })):null}
+          <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2">
+            {getData.completed && getData.completed.length>0? (getData.completed.map((user, index) => {
+              return (
+                <ProgressCard
+                  key={index}
+                  heading={user.title}
+                  tasks={user.tasks}
+                  percentComplete={(user.completedTasks / user.tasks) * 100}
+                  cardColor={cardColors[index]}
+                />
+              );
+            })):null}
+          </div>
         </div>
       </div>
     </div>
@@ -100,13 +125,13 @@ function MyProgress() {
 function Statistics() {
   return (
     <div>
-      <h1 className="text-2xl font-semibold my-2">Statistics</h1>
+      <h1 className="text-2xl font-semibold my-8">Statistics</h1>
       <div className="flex gap-x-4">
-        <div className=" flex-col justify-center items-center space-y-8 w-36 h-36 rounded-lg p-2 bg-gray-100">
-          <h1 className="text-6xl font-semibold">2</h1>
-          <p className="text-sm">projects completed</p>
+        <div className=" flex-col justify-center items-center space-y-2 w-36 h-36 rounded-lg py-4 bg-white text-center">
+          <p className="text-6xl font-semibold ">2</p>
+          <p className="text-md">Projects completed</p>
         </div>
-        <div className="w-36 h-36 rounded-lg p-2 bg-gray-100 flex-col ">
+        <div className="w-36 h-36 rounded-lg py-4 bg-white flex-col text-center">
           <div className=" flex justify-center items-center">
             <CircularProgress
               value={40}
@@ -117,44 +142,164 @@ function Statistics() {
               <CircularProgressLabel>40%</CircularProgressLabel>
             </CircularProgress>
           </div>
-          <p className="text-sm">project progress</p>
+          <p className="text-md">Project progress</p>
+        </div>
+        <div className="w-96 h-36 bg-white flex justify-between p-4 rounded-lg">
+          <div className=" flex-col justify-center items-center space-y-2 w-36 h-24 py-4 bg-white text-center">
+            <p className="text-4xl font-semibold ">8</p>
+            <p className="text-md">Hours spent this week</p>
+          </div>
+          <img className="w-48 h-24 pt-4" src={graph_img} alt="graph" />
         </div>
       </div>
     </div>
   );
 }
-function Assignment() {
+
+function Assignment({ assignment }) {
   return (
-    <div>
-      <h2>My Assignments</h2>
+    <div className="flex justify-between items-center h-24 p-4 rounded-lg hover:bg-white duration-200">
+      <div className="flex items-center gap-x-4">
+        <div className={`w-16 h-16 ${assignment.color} rounded-lg`}></div>
+        <div>
+          <h2 className="font-bold">{assignment.heading}</h2>
+          <p>{assignment.body}</p>
+        </div>
+      </div>
+      <span>{assignment.date}</span>
+      <button>
+        <i className="ri-more-fill"></i>
+      </button>
     </div>
   );
 }
-function Calender() {
+
+function AssignmentList() {
+  const initialAssignmentList = [
+    {
+      heading: "Color Theory",
+      body: "UX Design Fundamentals",
+      date: "9 Feb 2024",
+      color: "bg-pink-300",
+      id: 1,
+    },
+    {
+      heading: "Second Design Concept",
+      body: "UX/UI",
+      date: "13 Mar 2024",
+      color: "bg-sky-300",
+      id: 2,
+    },
+    {
+      heading: "Filtering and Sorting",
+      body: "Design Composition",
+      date: "2 Mar 2024",
+      color: "bg-purple-300",
+      id: 3,
+    },
+  ];
+  return initialAssignmentList.map((assignment) => (
+    <Assignment className="hover:bg-white" assignment={assignment} />
+  ));
+}
+
+function MyAssignment() {
   return (
-    <div>
-      <h2>Calender</h2>
+    <div className="flex-col">
+      <div className="flex justify-between  ">
+        <h1 className="text-2xl font-semibold my-8">My Assignments</h1>
+        <button>
+          View All<i className="ri-arrow-drop-right-line"></i>
+        </button>
+      </div>
+      <AssignmentList />
     </div>
   );
 }
+function MyCalendar() {
+  const [date, setDate] = useState(new Date());
+
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold my-8">Calendar</h1>
+      <Calendar
+        className="bg-white rounded-lg p-8 font-semibold"
+        onChange={setDate}
+        value={date}
+      />
+    </div>
+  );
+}
+
+function UpcomingAssignments({ assignment }) {
+  return (
+    <button className="flex justify-between items-center h-24 p-2 rounded-lg hover:bg-gray-200 duration-200">
+      <div className="flex items-center gap-x-4 rounded-lg">
+        <div className={`w-12 h-12 ${assignment.color} rounded-lg`}></div>
+        <div>
+          <h2 className="font-semibold">{assignment.heading}</h2>
+          <p>{assignment.body}</p>
+        </div>
+        <span>{assignment.date}</span>
+      </div>
+      <button>
+        <i className="ri-arrow-drop-right-line"></i>
+      </button>
+    </button>
+  );
+}
+
 function Upcoming() {
+  const upcomingAssignments = [
+    {
+      heading: "Color Theory",
+      body: "UX Design Fundamentals",
+      date: "9 Feb 2024",
+      color: "bg-orange-200",
+      id: 1,
+    },
+    {
+      heading: "Second Design Concept",
+      body: "UX/UI",
+      date: "13 Mar 2024",
+      color: "bg-lime-300",
+      id: 2,
+    },
+    {
+      heading: "Filtering and Sorting",
+      body: "Design Composition",
+      date: "2 Mar 2024",
+      color: "bg-purple-300",
+      id: 3,
+    },
+  ];
   return (
-    <div>
-      <h2>Upcoming</h2>
+    <div className=" flex-col">
+      <h1 className="text-2xl font-semibold my-8">Upcoming</h1>
+      <div className="bg-white rounded-lg p-4 h-fit">
+        {upcomingAssignments.map((assignment) => (
+          <UpcomingAssignments assignment={assignment} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function Dashboard() {
   return (
-    <div className="flex-1 h-screen p-4">
-      {/* <div className="overflow-auto h-full bg-orange-300 w-fit">
-        <MyCard />
-        <MyCard />
-      </div> */}
+    <div className="flex-1 h-screen p-4 overflow-scroll bg-gray-100">
       <Searchbar className="w-full" />
       <MyProgress />
-      <Statistics />
+      <div className="flex w-full justify-between  space-x-4">
+        <div className="flex-col w-4/6">
+          <Statistics />
+          <MyAssignment />
+        </div>
+        <div className="flex-col w-2/6">
+          <MyCalendar />
+          <Upcoming />
+        </div>
+      </div>
     </div>
   );
 }
