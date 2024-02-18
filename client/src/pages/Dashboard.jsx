@@ -94,7 +94,7 @@ function MyProgress() {
 
   console.log(getData);
 
-  const cardColors = ["bg-lime-300", "bg-lime-300", "bg-sky-300"];
+  const cardColors = ["bg-yellow-300", "bg-red-300", "bg-sky-300"];
 
 }
 
@@ -106,7 +106,7 @@ function Progress() {
         <div className="w-1/2">
           <h1 className="text-xl">Hi John!</h1>
           <p className="text-5xl mb-8 mt-8">
-            You have completed {getData.completed && getData.completed.length>0? getData.completed[0].completedTasks : 0} tasks
+            You have completed {getData.completed && getData.completed.length>0? getData.completed[1].tasks : 0} tasks
             this week
           </p>
           <a
