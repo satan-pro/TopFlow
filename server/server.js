@@ -65,5 +65,5 @@ app.get("/dashboard", async function(req, res){
 });
 
 app.listen(5000, function(){
-    console.log("Server set on port 3000");
+    console.log("Server set on port 5000");
 })

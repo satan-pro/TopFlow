@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { CircularProgress, CircularProgressLabel, Progress } from "@chakra-ui/react";
+import {
+  CircularProgress,
+  CircularProgressLabel,
+  Progress,
+} from "@chakra-ui/react";
 import { Calendar } from "react-calendar";
 import axios from "axios";
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
-import { Calendar } from "react-calendar";
 import graph_img from "../assets/graph.png";
 
 function Searchbar() {
@@ -71,16 +73,37 @@ function SmallCardView() {
 
 function ProgressCard(props) {
   return (
-    <div className={`${props.cardColor} flex flex-col p-6 justify-end inline-block bg-red-400 w-48 h-44 rounded-xl gap-3 duration-300 hover:-translate-y-1 hover:shadow-md hover:shadow-gray-500`}>
+    <div
+      className={`${props.cardColor} flex flex-col p-6 justify-end inline-block bg-red-400 w-48 h-44 rounded-xl gap-3 duration-300 hover:-translate-y-1 hover:shadow-md hover:shadow-gray-500`}
+    >
       <h1 className="text-2xl text-black font-bold">{props.heading}</h1>
       <div className="flex flex-row text-sm justify-start gap-1">
-        <p className="inline-block text-black font-semibold">{props.tasks} tasks | </p>
-        <p className="inline-block text-black font-semibold">{Math.floor(props.percentComplete)} %</p>
+        <p className="inline-block text-black font-semibold">
+          {props.tasks} tasks |{" "}
+        </p>
+        <p className="inline-block text-black font-semibold">
+          {Math.floor(props.percentComplete)} %
+        </p>
       </div>
-      <Progress value={props.percentComplete} size='xs' colorScheme="purple"/>
+      <Progress value={props.percentComplete} size="xs" colorScheme="purple" />
     </div>
   );
 }
+
+/*function MyProgress() {
+  const [getData, setGetData] = useState([{}]);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/dashboard").then((response) => {
+      setGetData(response.data.userData);
+       console.log(response.data.userData);
+    });
+  }, []);
+
+  console.log(getData);
+
+  const cardColors = ["bg-yellow-300", "bg-red-300", "bg-sky-300"];
+}*/
 
 function MyProgress() {
   const [getData, setGetData] = useState([{}]);
@@ -95,10 +118,6 @@ function MyProgress() {
   console.log(getData);
 
   const cardColors = ["bg-yellow-300", "bg-red-300", "bg-sky-300"];
-
-}
-
-function Progress() {
   return (
     <div>
       <h1 className="text-2xl font-semibold my-8">My Progress</h1>
@@ -106,8 +125,11 @@ function Progress() {
         <div className="w-1/2">
           <h1 className="text-xl">Hi John!</h1>
           <p className="text-5xl mb-8 mt-8">
-            You have completed {getData.completed && getData.completed.length>0? getData.completed[1].tasks : 0} tasks
-            this week
+            You have completed{" "}
+            {getData.completed && getData.completed.length > 0
+              ? getData.completed[1].tasks
+              : 0}{" "}
+            tasks this week
           </p>
           <a
             className="bg-white rounded-2xl px-4 text-indigo-950 p-1 hover:border-2 duration-400"
@@ -121,20 +143,20 @@ function Progress() {
           <div className="inline-block bg-red-400 w-48 rounded-xl"></div>
           <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div> */}
           <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2">
-            {getData.completed && getData.completed.length>0? (getData.completed.map((user, index) => {
-              return (
-                <ProgressCard
-                  key={index}
-                  heading={user.title}
-                  tasks={user.tasks}
-                  percentComplete={(user.completedTasks / user.tasks) * 100}
-                  cardColor={cardColors[index]}
-                />
-              );
-            })):null}
+            {getData.completed && getData.completed.length > 0
+              ? getData.completed.map((user, index) => {
+                  return (
+                    <ProgressCard
+                      key={index}
+                      heading={user.title}
+                      tasks={user.tasks}
+                      percentComplete={(user.completedTasks / user.tasks) * 100}
+                      cardColor={cardColors[index]}
+                    />
+                  );
+                })
+              : null}
           </div>
-        <div className="w-1/2 bg-indigo-950 overflow-x-hidden overflow-y-hidden whitespace-nowrap">
-          <SmallCardView />
         </div>
       </div>
     </div>
@@ -309,7 +331,6 @@ export default function Dashboard() {
     <div className="flex-1 h-screen p-4 overflow-scroll bg-gray-100">
       <Searchbar className="w-full" />
       <MyProgress />
-      <Progress />
       <div className="flex w-full justify-between  space-x-4">
         <div className="flex-col w-4/6">
           <Statistics />

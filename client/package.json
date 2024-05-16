@@ -19,8 +19,10 @@
     "@emotion/styled": "^11.11.0",
     "@videosdk.live/react-sdk": "^0.1.83",
     "@zegocloud/zego-uikit-prebuilt": "^1.10.2",
+    "animate.css": "^4.1.1",
     "axios": "^1.6.7",
     "framer-motion": "^11.0.3",
+    "pattern.css": "^1.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.8.0",
     "react-dom": "^18.2.0",
@@ -41,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.3.4",
     "gh-pages": "^6.1.1",
     "postcss": "^8.4.32",
+    "sass": "^1.71.1",
     "tailwindcss": "^3.4.1",
     "vite": "^4.3.9"
   }
