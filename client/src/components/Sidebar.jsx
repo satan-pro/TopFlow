@@ -6,37 +6,31 @@ export default function Sidebar() {
     setSelected((val) => !val);
   }
 
-  const borderStyles = {
-    borderTopLeftRadius: "15px",
-    borderBottomLeftRadius: "15px",
-    backgroundColor: "#f1f5f9",
-  };
-
   return (
-    <aside className="flex-col h-screen w-64 m-4 text-slate-500 space-y-36">
+    <aside className="flex-col h-screen w-64 m-4 mr-0 text-slate-500 space-y-36">
       <a href="/" className="text-2xl font-semibold">
         TopFlow
       </a>
-      <ul className="flex-col space-y-8 text-md font-semibold">
-        <li className="flex gap-x-2 ">
+      <ul className="flex-col space-y-4 text-md font-semibold">
+        <li className="flex gap-x-2 bg-gray-100 p-4 rounded-l-full">
           <i className="ri-bar-chart-box-fill"></i>
           <a href="dashboard" onClick={handleSetSelected}>
             Dashboard
           </a>
         </li>
-        <li className="flex gap-x-2">
+        <li className="flex gap-x-2 p-2 rounded-l-full ">
           <i className="ri-calendar-2-fill"></i>
           <a href="schedule">Schedule</a>
         </li>
-        <li className="flex gap-x-2">
+        <li className="flex gap-x-2 p-2 rounded-l-full ">
           <i className="ri-folder-user-fill"></i>
           <a href="projects">Projects</a>
         </li>
-        <li className="flex gap-x-2">
+        <li className="flex gap-x-2 p-2 rounded-l-full ">
           <i className="ri-message-line"></i>
           <a href="messages">Messages</a>
         </li>
-        <li className="flex gap-x-2">
+        <li className="flex gap-x-2 p-2 rounded-l-full ">
           <i className="ri-vidicon-fill"></i>
           <a href="jamming">Jamming</a>
         </li>

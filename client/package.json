@@ -1,5 +1,5 @@
 {
-  "name": "react-navbar",
+  "name": "topflow",
   "homepage": "https://gitname.github.io/react-gh-pages",
   "private": true,
   "version": "0.0.0",
@@ -17,6 +17,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@zegocloud/zego-uikit-prebuilt": "^1.10.2",
     "framer-motion": "^11.0.3",
     "react": "^18.2.0",
     "react-calendar": "^4.8.0",

@@ -57,7 +57,7 @@ function SmallCardView() {
   );
 }
 
-function Progress() {
+function MyProgress() {
   return (
     <div>
       <h1 className="text-2xl font-semibold my-8">My Progress</h1>
@@ -249,7 +249,7 @@ export default function Dashboard() {
   return (
     <div className="flex-1 h-screen p-4 overflow-scroll bg-gray-100">
       <Searchbar className="w-full" />
-      <Progress />
+      <MyProgress />
       <div className="flex w-full justify-between  space-x-4">
         <div className="flex-col w-4/6">
           <Statistics />
