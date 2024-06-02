@@ -1,69 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const cors = require("cors");
-
 const app = express();
+const connectToMongoDB = require("./connection");
 
+//route imports
+const projectRoute = require("./routes/projects");
+const dashboardRoute = require("./routes/dashboard");
+
+//middlewares
 app.use(cors({
-    origin:"http://localhost:3000"
+    origin: "http://localhost:3000"
 }))
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/teampilotDB');
+//connection to DB
+connectToMongoDB('mongodb://127.0.0.1:27017/teampilotDB')
+    .then(console.log("Connection to MongoDB established!"))
+    .catch((err) => { console.log("Connection to MongoDB failed.", err) })
 
-const projectSchema = new mongoose.Schema({
-    title:String,
-    tag:String,
-    members : [String],
-    tasks : Number,
-    completedTasks : Number
-});
+//handling routes
+app.use("/", projectRoute);
+app.use("/", dashboardRoute);
 
-const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    completed : [projectSchema],
-    ongoing : [projectSchema]
-});
-
-const user = new mongoose.model('user', userSchema);
-const project = new mongoose.model('project', projectSchema);
-
-app.get("/", function(req, res){
-    console.log("Working...")
-});
-
-app.get("/projects", function(req, res){
-    project.find({}).exec().then((projects)=>{
-        res.json({projects: projects});
-    });
-});
-
-app.get("/dashboard", async function(req, res){
-
-   const username = 'satan';
-
-   const projects = await project.find({members:username}).exec();
-
-   if(projects.length >0)
-   {
-    const updatedUser = await user.findOneAndUpdate(
-        { username:username },
-        { $set : {
-            completed : projects,
-            ongoing : projects
-        }},
-        {new : true}
-    ).exec();
-
-   res.json({userData : updatedUser});
-    }
-    else{
-        res.json({userData : null});
-    }
-});
-
-app.listen(5000, function(){
-    console.log("Server set on port 5000");
-})
+app.listen(5000, () => console.log("Server set on port 5000"));

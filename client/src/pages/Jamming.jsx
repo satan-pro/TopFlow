@@ -1,9 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-import React, { useState, useCallback } from "react";
-import { Routes, Route, useNavigate, useParams } from "react-router-dom";
-import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+
 export default function Jamming() {
   return (
     <Routes>
@@ -75,35 +73,3 @@ function JammingRoom() {
   );
 }
 
-function JammingRoom() {
-  const { roomID } = useParams();
-  const myMeeting = async (element) => {
-    const appID = 962839740;
-    const serverSecret = "8d82c4a7f1d653786b86d95378431e08";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-      appID,
-      serverSecret,
-      roomID,
-      Date.now().toString(),
-      "Username"
-    );
-    const zc = ZegoUIKitPrebuilt.create(kitToken);
-    zc.joinRoom({
-      container: element,
-      sharedLinks: [
-        {
-          name: "Copy Link",
-          url: ` http://10.52.5.59:3000/room/${roomID}`,
-        },
-      ],
-      scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall,
-      },
-    });
-  };
-  return (
-    <div className="flex justify-center items-center w-full">
-      <div ref={myMeeting} />
-    </div>
-  );
-}
