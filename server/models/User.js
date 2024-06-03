@@ -10,7 +10,8 @@ const userSchema = new Schema({
         name: String,
         bio: String,
         avatar_url: String
-    }
+    },
+    refreshToken: { type: String }
 });
 
 module.exports = mongoose.model('User', userSchema);
