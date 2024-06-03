@@ -48,12 +48,12 @@ const handleUserLogin = async (req, res) => {
     if (!validPassword) { return res.status(400).json({ "message": "email or password wrong" }); }
 
     const accessToken = jwt.sign(
-        { "userID": userExists._id },
+        { "_id": userExists._id },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '1d' }
     );
     const refreshToken = jwt.sign(
-        { "userID": userExists._id },
+        { "_id": userExists._id },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '7d' }
     );
@@ -61,14 +61,37 @@ const handleUserLogin = async (req, res) => {
     //saving refresh token in db and sending refresh token as cookie
     userExists.refreshToken = refreshToken;
     await userExists.save();
-    res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'None', secure: true });
 
-    //sending access token as header
+    //access token to be sent as header
     res.json({ accessToken });
 
+}
+
+const handleUserLogout = async (req, res) => {
+    //! TODO: delete access token on the client as well 
+
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204);
+    const refreshToken = cookies.jwt;
+
+    const user = await User.findOne({ refreshToken: refreshToken });
+    //if user not found then clear the cookie anyways
+    if (!user) {
+        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
+        return res.sendStatus(204)
+    }
+
+    //deleting refreshToken from db 
+    user.refreshToken = "";
+    await user.save();
+
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true })
+    res.sendStatus(204);
 }
 
 module.exports = {
     handleUserRegister,
     handleUserLogin,
+    handleUserLogout,
 }

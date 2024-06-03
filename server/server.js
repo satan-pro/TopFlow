@@ -5,17 +5,19 @@ const connectToMongoDB = require("./connection");
 const dotenv = require('dotenv');
 dotenv.config();
 const verifyJWT = require('./middlewares/verifyJWT');
+const credentials = require('./middlewares/credentials');
 const cookieParser = require('cookie-parser');
 
 //route imports
-const userRoute = require("./routes/user");
+const userRoute = require("./routes/auth");
 const projectRoute = require("./routes/projects");
 const dashboardRoute = require("./routes/dashboard");
+const refreshTokenRoute = require("./routes/refreshToken");
+const corsOptions = require('./config/corsOptions');
 
 //middlewares
-app.use(cors({
-    origin: "http://localhost:3000"
-}));
+app.use(credentials);
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -26,7 +28,8 @@ connectToMongoDB(process.env.CONNECT_STRING)
     .catch((err) => { console.log("Connection to MongoDB failed.", err) })
 
 //handling routes
-app.use("/user", userRoute);
+app.use("/auth", userRoute);
+app.use("/refresh", refreshTokenRoute);
 //all routes below this are protected
 app.use(verifyJWT)
 app.use("/", projectRoute);
