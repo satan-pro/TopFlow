@@ -28,7 +28,7 @@ const handleUserRegister = async (req, res) => {
             }
         })
         const savedUser = await user.save();
-        //!redirect to login page
+        //TODO redirect to login page
         res.send(savedUser._id);
     } catch (err) {
         res.status(400).send(err);

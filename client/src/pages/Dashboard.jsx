@@ -44,15 +44,6 @@ function Searchbar() {
   );
 }
 
-/* function SmallCard({ bgColor }) {
-  return (
-    <div
-      className={`${bgColor} inline-block w-48 h-48 rounded-xl `}
-    ></div>
-  );
-} */
-
-/* function SmallCardView() {
 function SmallCard({ bgColor }) {
   return (
     <div
@@ -69,7 +60,7 @@ function SmallCardView() {
       <SmallCard bgColor="bg-sky-300" />
     </div>
   );
-} */
+}
 
 function MyProgress() {
   return (
@@ -78,13 +69,14 @@ function MyProgress() {
       <div className="flex border-box bg-indigo-950 w-full p-4 h-64 rounded-lg text-white">
         <div className="w-1/2">
           <h1 className="text-xl">Hi John!</h1>
-          <p className="text-5xl mb-8 mt-8">
+          <SmallCardView />
+          {/* <p className="text-5xl mb-8 mt-8">
             You have completed{" "}
             {getData.completed && getData.completed.length > 0
               ? getData.completed[1].tasks
               : 0}{" "}
             tasks this week
-          </p>
+          </p> */}
           <a
             className="bg-white rounded-2xl px-4 text-indigo-950 p-1 hover:border-2 duration-400"
             href="/"
@@ -93,10 +85,10 @@ function MyProgress() {
           </a>
         </div>
         <div className="w-1/2 bg-indigo-950 m-4 flex gap-x-2 overflow-x-hidden overflow-y-hidden whitespace-nowrap">
-          {/* <div className="inline-block bg-lime-400 w-48 rounded-xl"></div>
+          <div className="inline-block bg-lime-400 w-48 rounded-xl"></div>
           <div className="inline-block bg-red-400 w-48 rounded-xl"></div>
-          <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div> */}
-          <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2">
+          <div className="inline-block bg-yellow-400 w-48 rounded-xl"></div>
+          {/* <div className="relative border-box h-full flex justify-between items-center m-2 gap-x-2">
             {getData.completed && getData.completed.length > 0
               ? getData.completed.map((user, index) => {
                   return (
@@ -110,7 +102,7 @@ function MyProgress() {
                   );
                 })
               : null}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
