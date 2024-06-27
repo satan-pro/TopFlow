@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
 import "pattern.css";
 import "animate.css";
-import hero_img from "./assets/dashboard.png";
-import hero_bg from "./assets/hero_bg.png";
-import CTACard_1 from "./assets/CTACard_1.png";
-import CTACard_2 from "./assets/CTACard_2.png";
-import CTACard_3 from "./assets/CTACard_3.png";
-import CTACard_4 from "./assets/CTACard_4.png";
+import hero_img from "../assets/dashboard.png";
+import hero_bg from "../assets/hero_bg.png";
+import CTACard_1 from "../assets/CTACard_1.png";
+import CTACard_2 from "../assets/CTACard_2.png";
+import CTACard_3 from "../assets/CTACard_3.png";
+import CTACard_4 from "../assets/CTACard_4.png";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <nav className="w-screen h-6 px-28 py-8 flex justify-between items-center border-b border-secondary-gray-800 fixed top-0 left-0 right-0 bg-navbar-white backdrop-filter backdrop-blur-md bg-opacity-45 z-20 animate__animated animate__fadeInDown">
       <div className="flex gap-5 items-center">
@@ -24,10 +26,20 @@ function Navbar() {
         </div>
       </div>
       <div className="flex gap-2">
-        <button className="w-24 flex items-center justify-center border-solid border-2 border-primary-blue rounded-lg p-2 text-primary-blue">
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="w-24 flex items-center justify-center border-solid border-2 border-primary-blue rounded-lg p-2 text-primary-blue hover:-translate-y-1 duration-200 hover:shadow-primary-blue"
+        >
           Login
         </button>
-        <button className="w-24 flex items-center justify-center border-solid border-2 rounded-lg p-2  border-primary-blue bg-primary-blue text-white">
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="w-24 flex items-center justify-center border-solid border-2 rounded-lg p-2  border-primary-blue bg-primary-blue text-white hover:-translate-y-1 duration-200"
+        >
           Sign Up
         </button>
       </div>
@@ -162,7 +174,7 @@ function Features() {
 }
 
 function Brands() {
-  return(
+  return (
     <div className="w-full flex flex-col items-center py-16 gap-5">
       <h2 className="text-xl text-primary-blue leading-loose text-center">
         BRING YOUR WORK TOGETHER
@@ -171,10 +183,12 @@ function Brands() {
         Integrate your Project with More Apps
       </h1>
       <p className="font-medium text-md w-6/12 text-center">
-        We have a lot of integrations, so you can use your favourite work tools to communicate, collaborate, and coordinate work in one place, from start to finish.
+        We have a lot of integrations, so you can use your favourite work tools
+        to communicate, collaborate, and coordinate work in one place, from
+        start to finish.
       </p>
     </div>
-  )
+  );
 }
 
 function Body() {
@@ -183,7 +197,7 @@ function Body() {
       <Navbar />
       <Hero />
       <Features />
-      <Brands/>
+      <Brands />
     </body>
   );
 }

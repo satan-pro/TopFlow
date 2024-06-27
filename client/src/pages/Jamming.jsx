@@ -1,17 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-
-export default function Jamming() {
+function Jamming() {
   return (
     <Routes>
-      <Route element={<JammingHome />} path="/jamming"></Route>
+      <Route element={<JammingHome />} path="/"></Route>
       <Route element={<JammingRoom />} path="/room/:roomID"></Route>
     </Routes>
   );
 }
 
-function JammingHome() {
+export default function JammingHome() {
   const [value, setValue] = useState();
   const navigate = useNavigate();
   const handleJoinRoom = useCallback(() => {
@@ -72,4 +71,3 @@ function JammingRoom() {
     </div>
   );
 }
-

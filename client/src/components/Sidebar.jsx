@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState(false);
   function handleSetSelected() {
     setSelected((val) => !val);
@@ -35,7 +37,10 @@ export default function Sidebar() {
           <a href="jamming">Jamming</a>
         </li>
       </ul>
-      <button className="p-2 border-2 border-slate-500 rounded-lg duration-300 hover:-translate-y-1  hover:shadow-sm hover:shadow-gray-500 ">
+      <button
+        className="p-2 border-2 border-slate-500 rounded-lg duration-300 hover:-translate-y-1  hover:shadow-sm hover:shadow-gray-500"
+        onClick={() => navigate("/")}
+      >
         <i className="ri-login-box-line"></i>
         Log Out
       </button>
