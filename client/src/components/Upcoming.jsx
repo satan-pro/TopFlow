@@ -1,6 +1,6 @@
-function UpcomingAssignments({ assignment }) {
+function UpcomingAssignments({ assignment },key) {
   return (
-    <button className="flex justify-between items-center h-24 p-2 rounded-lg hover:bg-gray-200 duration-200">
+    <div className="flex justify-between items-center h-24 p-2 rounded-lg hover:bg-gray-200 duration-200">
       <div className="flex items-center gap-x-4 rounded-lg">
         <div className={`w-12 h-12 ${assignment.color} rounded-lg`}></div>
         <div>
@@ -12,7 +12,7 @@ function UpcomingAssignments({ assignment }) {
       <button>
         <i className="ri-arrow-drop-right-line"></i>
       </button>
-    </button>
+    </div>
   );
 }
 
@@ -44,8 +44,8 @@ export default function Upcoming() {
     <div className=" flex-col">
       <h1 className="text-2xl font-semibold my-8">Upcoming</h1>
       <div className="bg-white rounded-lg p-4 h-fit">
-        {upcomingAssignments.map((assignment) => (
-          <UpcomingAssignments assignment={assignment} />
+        {upcomingAssignments.map(( assignment) => (
+          <UpcomingAssignments assignment={assignment} key={assignment.id} />
         ))}
       </div>
     </div>

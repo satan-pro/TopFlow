@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState(false);
-  function handleSetSelected() {
-    setSelected((val) => !val);
-  }
+  const location = useLocation();
+
+  const links = [
+    { path: "/dashboard", icon: "ri-bar-chart-box-fill", label: "Dashboard" },
+    { path: "/schedule", icon: "ri-calendar-2-fill", label: "Schedule" },
+    { path: "/projects", icon: "ri-folder-user-fill", label: "Projects" },
+    { path: "/messages", icon: "ri-message-line", label: "Messages" },
+    { path: "/jamming", icon: "ri-vidicon-fill", label: "Jamming" },
+  ];
 
   return (
     <aside className="flex-col h-screen w-64 m-4 mr-0 text-slate-500 space-y-36">
@@ -14,28 +19,17 @@ export default function Sidebar() {
         TopFlow
       </a>
       <ul className="flex-col space-y-4 text-md font-semibold">
-        <li className="flex gap-x-2 bg-gray-100 p-4 rounded-l-full">
-          <i className="ri-bar-chart-box-fill"></i>
-          <a href="dashboard" onClick={handleSetSelected}>
-            Dashboard
-          </a>
-        </li>
-        <li className="flex gap-x-2 p-2 rounded-l-full ">
-          <i className="ri-calendar-2-fill"></i>
-          <a href="schedule">Schedule</a>
-        </li>
-        <li className="flex gap-x-2 p-2 rounded-l-full ">
-          <i className="ri-folder-user-fill"></i>
-          <a href="projects">Projects</a>
-        </li>
-        <li className="flex gap-x-2 p-2 rounded-l-full ">
-          <i className="ri-message-line"></i>
-          <a href="messages">Messages</a>
-        </li>
-        <li className="flex gap-x-2 p-2 rounded-l-full ">
-          <i className="ri-vidicon-fill"></i>
-          <a href="jamming">Jamming</a>
-        </li>
+        {links.map((link) => (
+          <li
+            key={link.path}
+            className={`flex gap-x-2 p-2 rounded-l-full ${
+              location.pathname === link.path ? "bg-gray-100 p-4" : ""
+            }`}
+          >
+            <i className={link.icon}></i>
+            <a href={link.path}>{link.label}</a>
+          </li>
+        ))}
       </ul>
       <button
         className="p-2 border-2 border-slate-500 rounded-lg duration-300 hover:-translate-y-1  hover:shadow-sm hover:shadow-gray-500"

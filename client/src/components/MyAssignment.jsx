@@ -1,4 +1,4 @@
-function Assignment({ assignment }) {
+function Assignment({ assignment }, key) {
   return (
     <div className="flex justify-between items-center h-24 p-4 rounded-lg hover:bg-white duration-200">
       <div className="flex items-center gap-x-4">
@@ -41,7 +41,11 @@ function AssignmentList() {
     },
   ];
   return initialAssignmentList.map((assignment) => (
-    <Assignment className="hover:bg-white" assignment={assignment} />
+    <Assignment
+      className="hover:bg-white"
+      assignment={assignment}
+      key={assignment.id}
+    />
   ));
 }
 

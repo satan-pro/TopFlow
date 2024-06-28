@@ -31,7 +31,7 @@ export default function MyProgress() {
               tasks this week */}
           </p>
           <a
-            className="bg-white rounded-2xl px-4 text-indigo-950 p-1 hover:border-2 duration-400"
+            className="bg-white rounded-2xl px-4 text-indigo-950 p-1 hover:shadow-md hover:shadow-gray-500 duration-200"
             href="/"
           >
             See All <i className="ri-arrow-right-up-line"></i>
