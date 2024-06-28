@@ -1,5 +1,5 @@
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
-import graph_img from "../assets/graph.png";
+import graph_img from "/assets/graph.png";
 
 export default function Statistics() {
   return (

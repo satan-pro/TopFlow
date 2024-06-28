@@ -1,11 +1,11 @@
 import "pattern.css";
 import "animate.css";
-import hero_img from "../assets/dashboard.png";
-import hero_bg from "../assets/hero_bg.png";
-import CTACard_1 from "../assets/CTACard_1.png";
-import CTACard_2 from "../assets/CTACard_2.png";
-import CTACard_3 from "../assets/CTACard_3.png";
-import CTACard_4 from "../assets/CTACard_4.png";
+import hero_img from "/assets/dashboard.png";
+import hero_bg from "/assets/hero_bg.png";
+import CTACard_1 from "/assets/CTACard_1.png";
+import CTACard_2 from "/assets/CTACard_2.png";
+import CTACard_3 from "/assets/CTACard_3.png";
+import CTACard_4 from "/assets/CTACard_4.png";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 

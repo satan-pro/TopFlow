@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -7,6 +8,12 @@ const Login = () => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 20 },
   };
 
   return (
@@ -33,88 +40,154 @@ const Login = () => {
       {/* Right side (Login/Register form) */}
       <div className="w-2/5 backdrop-blur-xl p-8 relative z-10 flex items-center justify-center">
         <div className="w-full bg-opacity-50 backdrop-blur-lg bg-white p-8 rounded-lg">
-          <h2 className="text-3xl font-bold mb-6 text-center">
-            {isLogin ? "Login" : "Register"}
-          </h2>
-          <form
-            onSubmit={() => {
-              navigate("/dashboard");
-            }}
-          >
-            {!isLogin && (
-              <div className="mb-4">
-                <label
-                  className="block text-black text-lg mb-2"
-                  htmlFor="username"
-                >
-                  Username
-                </label>
-                <input
-                  className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  type="text"
-                  id="username"
-                  placeholder="Enter your username"
-                  required
-                />
-              </div>
-            )}
-            <div className="mb-4">
-              <label className="block text-black text-lg mb-2" htmlFor="email">
-                Email
-              </label>
-              <input
-                className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                className="block text-black text-lg mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
-            >
-              {isLogin ? "Login" : "Register"}
-            </button>
-          </form>
-          <div className="mt-4 text-center">
+          <AnimatePresence mode="wait">
             {isLogin ? (
-              <p>
-                New User?{" "}
-                <button
-                  onClick={toggleForm}
-                  className="text-blue-500 hover:underline"
+              <motion.div
+                key="login"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={formVariants}
+                transition={{ duration: 0.5 }}
+              >
+                <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+                <form
+                  onSubmit={() => {
+                    navigate("/dashboard");
+                  }}
                 >
-                  Register here
-                </button>
-              </p>
+                  <div className="mb-4">
+                    <label
+                      className="block text-black text-lg mb-2"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label
+                      className="block text-black text-lg mb-2"
+                      htmlFor="password"
+                    >
+                      Password
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                  >
+                    Login
+                  </button>
+                </form>
+                <div className="mt-4 text-center text-lg font-semibold">
+                  <p>
+                    New User?{" "}
+                    <button
+                      onClick={toggleForm}
+                      className="text-blue-500 hover:underline"
+                    >
+                      Register here
+                    </button>
+                  </p>
+                </div>
+              </motion.div>
             ) : (
-              <p className="text-lg font-semibold">
-                Already have an account?{" "}
-                <button
-                  onClick={toggleForm}
-                  className="text-blue-500 hover:underline"
+              <motion.div
+                key="register"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={formVariants}
+                transition={{ duration: 0.3 }}
+              >
+                <h2 className="text-3xl font-bold mb-6 text-center">
+                  Register
+                </h2>
+                <form
+                  onSubmit={() => {
+                    navigate("/dashboard");
+                  }}
                 >
-                  Login here
-                </button>
-              </p>
+                  <div className="mb-4">
+                    <label
+                      className="block text-black text-lg mb-2"
+                      htmlFor="username"
+                    >
+                      Username
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="text"
+                      id="username"
+                      placeholder="Enter your username"
+                      required
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-black text-lg mb-2"
+                      htmlFor="email"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="email"
+                      id="email"
+                      placeholder="Enter your email"
+                      required
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label
+                      className="block text-black text-lg mb-2"
+                      htmlFor="password"
+                    >
+                      Password
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 bg-white bg-opacity-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      type="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                  >
+                    Register
+                  </button>
+                </form>
+                <div className="mt-4 text-center text-lg font-semibold">
+                  <p>
+                    Already have an account?{" "}
+                    <button
+                      onClick={toggleForm}
+                      className="text-blue-500 hover:underline"
+                    >
+                      Login here
+                    </button>
+                  </p>
+                </div>
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
