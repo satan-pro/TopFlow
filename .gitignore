@@ -148,4 +148,3 @@ dist
 .pnp.*
 
 # Config folder inside the server folder
-/server/config/

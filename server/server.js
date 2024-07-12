@@ -7,6 +7,8 @@ dotenv.config();
 const verifyJWT = require('./middlewares/verifyJWT');
 const credentials = require('./middlewares/credentials');
 const cookieParser = require('cookie-parser');
+const http = require('http');
+const { Server } = require('socket.io');
 
 //route imports
 const userRoute = require("./routes/auth");
@@ -27,6 +29,29 @@ connectToMongoDB(process.env.CONNECT_STRING)
     .then(console.log("Connection to MongoDB established!"))
     .catch((err) => { console.log("Connection to MongoDB failed.", err) })
 
+// HTTP server creation
+const server = http.createServer(app);
+
+// socket.io initialization
+const io = new Server(server, { cors:corsOptions });
+
+io.on("connection", (socket)=>{
+    console.log(`User connected : ${socket.id}`);
+
+    // Joining rooms
+    socket.on("join_room", (data)=>{
+        socket.join(data);
+    });
+
+    // Send message only to rooms
+    socket.on("send_message", (data)=>{
+        // send message to receiver and senders
+        io.to(data.room).emit("receive_message", data);
+    })
+});
+
+
+
 //handling routes
 app.use("/auth", userRoute);
 app.use("/refresh", refreshTokenRoute);
@@ -35,4 +60,5 @@ app.use(verifyJWT)
 app.use("/", projectRoute);
 app.use("/", dashboardRoute);
 
-app.listen(5000, () => console.log("Server set on port 5000"));
+// For socket to work you need to listen to server rather than app
+server.listen(5000, () => console.log("Server set on port 5000"));
