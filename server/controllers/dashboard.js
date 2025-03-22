@@ -3,6 +3,8 @@ const project = require('../models/Project');
 
 async function handleGetDashboard(req, res) {
 
+    console.log(req.user);
+    console.log("hello user");
     const username = 'satan';
 
     const projects = await project.find({ members: username }).exec();

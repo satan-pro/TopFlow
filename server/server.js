@@ -8,6 +8,9 @@ const verifyJWT = require('./middlewares/verifyJWT');
 const credentials = require('./middlewares/credentials');
 const cookieParser = require('cookie-parser');
 const http = require('http');
+const passport = require('passport');
+require('./config/passport');
+const session = require('express-session');
 const { Server } = require('socket.io');
 
 //route imports
@@ -23,6 +26,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: process.env.ACCESS_TOKEN_SECRET, resave: false, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //connection to DB
 connectToMongoDB(process.env.CONNECT_STRING)
@@ -57,8 +63,8 @@ app.use("/auth", userRoute);
 app.use("/refresh", refreshTokenRoute);
 //all routes below this are protected
 app.use(verifyJWT)
-app.use("/", projectRoute);
-app.use("/", dashboardRoute);
+app.use("/projects", projectRoute);
+app.use("/dashboard", dashboardRoute);
 
 // For socket to work you need to listen to server rather than app
 server.listen(5000, () => console.log("Server set on port 5000"));

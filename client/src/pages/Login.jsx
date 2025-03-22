@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import githubLogo from "/assets/github_logo.png";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -88,9 +89,17 @@ const Login = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 my-2 rounded-lg hover:bg-blue-700 transition duration-300"
                   >
                     Login
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-full bg-zinc-800 text-white font-bold py-2 px-4 rounded-lg flex flex-row gap-4 justify-center items-center gap-2px hover:bg-stone-950 transition duration-300"
+                    onClick = {() => window.location.href = "http://localhost:5000/auth/github"}
+                  >
+                    Sign In Using GitHub
+                    <img src={githubLogo} alt="" className="size-[5%]"></img>
                   </button>
                 </form>
                 <div className="mt-4 text-center text-lg font-semibold">
@@ -134,7 +143,6 @@ const Login = () => {
                       type="text"
                       id="username"
                       placeholder="Enter your username"
-                      required
                     />
                   </div>
                   <div className="mb-4">
@@ -149,7 +157,6 @@ const Login = () => {
                       type="email"
                       id="email"
                       placeholder="Enter your email"
-                      required
                     />
                   </div>
                   <div className="mb-6">
@@ -164,14 +171,21 @@ const Login = () => {
                       type="password"
                       id="password"
                       placeholder="Enter your password"
-                      required
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 my-2 rounded-lg hover:bg-blue-700 transition duration-300"
                   >
                     Register
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-full bg-zinc-800 text-white font-bold py-2 px-4 rounded-lg flex flex-row gap-4 justify-center items-center gap-2px hover:bg-stone-950 transition duration-300"
+                    onClick = {() => window.location.href = "http://localhost:5000/auth/github"}
+                  >
+                    Sign In Using GitHub
+                    <img src={githubLogo} alt="" className="size-[5%]"></img>
                   </button>
                 </form>
                 <div className="mt-4 text-center text-lg font-semibold">
