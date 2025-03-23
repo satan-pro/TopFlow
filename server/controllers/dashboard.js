@@ -3,28 +3,21 @@ const project = require('../models/Project');
 
 async function handleGetDashboard(req, res) {
 
-    console.log(req.user);
-    console.log("hello user");
-    const username = 'satan';
+    const userGithubId = req.user;
 
-    const projects = await project.find({ members: username }).exec();
+    const userDetails = await user.findOne({githubId: userGithubId});
 
-    if (projects.length > 0) {
-        const updatedUser = await user.findOneAndUpdate(
-            { username: username },
-            {
-                $set: {
-                    completed: projects,
-                    ongoing: projects
-                }
-            },
-            { new: true }
-        ).exec();
-
-        res.json({ userData: updatedUser });
+    console.log(userDetails);
+    
+    if(userDetails) {
+        res.status(200).json({
+            user: userDetails
+        });
     }
     else {
-        res.json({ userData: null });
+        res.status(401).json({
+            message: "User not found"
+        })
     }
 }
 

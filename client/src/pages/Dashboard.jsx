@@ -8,13 +8,21 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function Dashboard() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:5000/dashboard`, {withCredentials: true})
     .then((response) => {
-      console.log(response);
-      setUser(response);
+      if(response.status === 200) {
+        console.log(response.data.user);
+        setUser((prev)=>{
+          return {...prev, details: response.data.user}});
+
+        console.log(user);
+      }
+      else {
+        alert(`Error ${response.status}: User not found`);
+      }
     })
     .catch((err)=>{
       console.log("Not logged in", err);
@@ -26,7 +34,7 @@ export default function Dashboard() {
   return (
     <div className="flex-1 h-screen p-4 overflow-scroll bg-gray-100">
       <Searchbar className="w-full" />
-      <MyProgress />
+      <MyProgress user={user.details} />
       <div className="flex w-full justify-between  space-x-4">
         <div className="flex-col w-4/6">
           <Statistics />

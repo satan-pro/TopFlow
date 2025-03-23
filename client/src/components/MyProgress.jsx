@@ -16,13 +16,13 @@ function SmallCardView() {
   );
 }
 
-export default function MyProgress() {
+export default function MyProgress({user}) {
   return (
     <div>
       <h1 className="text-2xl font-semibold my-8">My Progress</h1>
       <div className="flex border-box bg-indigo-950 w-full p-4 h-64 rounded-lg text-white">
         <div className="w-1/2">
-          <h1 className="text-xl">Hi John!</h1>
+          <h1 className="text-xl">{`Hi ${user?.profile?.name || "Guest"}`}</h1>
           <p className="text-5xl mb-8 mt-8">
             {/* You have completed{" "}
               {getData.completed && getData.completed.length > 0
