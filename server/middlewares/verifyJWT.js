@@ -13,6 +13,7 @@ const verifyJWT = (req, res, next) => {
             if (err) return res.sendStatus(403);
 
             // unreachable code
+            console.log(`Decoded at verifyJWT:`);
             console.log(decoded);
             req.user = decoded.id;
             next();

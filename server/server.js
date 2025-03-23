@@ -18,6 +18,7 @@ const userRoute = require("./routes/auth");
 const projectRoute = require("./routes/projects");
 const dashboardRoute = require("./routes/dashboard");
 const refreshTokenRoute = require("./routes/refreshToken");
+const githubRoute = require("./routes/github");
 const corsOptions = require('./config/corsOptions');
 
 //middlewares
@@ -63,6 +64,7 @@ app.use("/auth", userRoute);
 app.use("/refresh", refreshTokenRoute);
 //all routes below this are protected
 app.use(verifyJWT)
+app.use("/github", githubRoute);
 app.use("/projects", projectRoute);
 app.use("/dashboard", dashboardRoute);
 

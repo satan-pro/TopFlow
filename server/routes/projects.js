@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { handleGetProjects } = require('../controllers/projects')
 
-router.get('/project', handleGetProjects)
+router.get('/', handleGetProjects)
 
 module.exports = router;
