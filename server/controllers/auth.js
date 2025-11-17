@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/User");
+const axios = require("axios");
 require('dotenv').config();
 
 const handleUserRegister = async (req, res) => {
@@ -90,8 +91,36 @@ const handleUserLogout = async (req, res) => {
     res.sendStatus(204);
 }
 
+const handleGithubLogin = async (req, res) => {
+    if(!req)
+        return res.redirect("http://localhost:3000/login");
+
+    // Create a JWT token
+    const token = jwt.sign({id: req.user.id, githubAccessToken: req.user.accessToken}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+
+    // set JWT in a http-only secure cookie
+    res.cookie('jwt', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: "strict",
+        maxAge: 60*60*1000
+    })
+
+    /* // import the user repositories while loggin in
+    const importRepos = await axios.get(`http://localhost:5000/github/repos`);
+
+    if(importRepos.status !== 201) {
+        console.log("Failed to import repos");
+        res.redirect(`http://localhost:3000/login`);
+    } */
+
+    // Redirect URL
+    res.redirect(`http://localhost:3000/dashboard`);  // Add query param token=${token} if required
+}
+
 module.exports = {
     handleUserRegister,
     handleUserLogin,
     handleUserLogout,
+    handleGithubLogin,
 }

@@ -12,7 +12,8 @@ const userSchema = new Schema({
         bio: String,
         avatar_url: String
     },
-    refreshToken: { type: String }
+    refreshToken: { type: String },
+    accessToken: {type: String}
 });
 
 module.exports = mongoose.model('User', userSchema);
