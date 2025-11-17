@@ -92,13 +92,11 @@ const handleUserLogout = async (req, res) => {
 }
 
 const handleGithubLogin = async (req, res) => {
-    console.log(req);
-
     if(!req)
         return res.redirect("http://localhost:3000/login");
 
     // Create a JWT token
-    const token = jwt.sign({id: req.user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+    const token = jwt.sign({id: req.user.id, githubAccessToken: req.user.accessToken}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
 
     // set JWT in a http-only secure cookie
     res.cookie('jwt', token, {

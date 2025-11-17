@@ -6,20 +6,6 @@ import axios from 'axios';
 export default function Projects() {
   const [projects, setProjects] = useState([]);
 
-  // useEffect(() => {
-  //   axios.get(`http://localhost:5000/projects`, {withCredentials: true})
-  //   .then((response) => {
-  //     //console.log(response.data.projects);
-  //     setProjects((prev)=>{
-  //       return [...prev, ...response.data.projects];
-  //     });
-  //     console.log(projects);
-  //   })
-  //   .catch(err => {
-  //     console.log("Error fetching projects from Projects.jsx");
-  //   })
-  // }, []);
-
   useEffect(() => {
     axios.get(`http://localhost:5000/projects`, { withCredentials: true })
       .then((response) => {

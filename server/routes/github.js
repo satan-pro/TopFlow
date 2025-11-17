@@ -7,6 +7,8 @@ const Project = require("../models/Project");
 
 router.get('/repos', async function(req, res) {
     try {
+        console.log("Github route: ", req.user);
+        console.log("Github route: ", req.accessToken);
         const userGithubId = req.user;
         const user = await User.findOne({githubId: userGithubId});
         if(!user)
@@ -48,8 +50,8 @@ router.get('/repos', async function(req, res) {
                     $set: {
                         name: repo.name,
                         description: repo.description,
-                        maintainer_id: req.user._id,  // Link to logged-in user
-                        githubId: req.user.githubId,
+                        maintainer_id: user._id,  // Link to logged-in user
+                        githubId: user.githubId,
                         details: {
                             projectUrl: repo.html_url,
                             cloneUrl: repo.clone_url,
@@ -66,7 +68,7 @@ router.get('/repos', async function(req, res) {
         }));
 
         // insert into MongoDB
-        const insertedProjects = await Project.insertMany(projectsToInsert, {ordered: false}).catch(err=>{console.log(err)});
+        const insertedProjects = await Project.bulkWrite(projectsToInsert, {ordered: false}).catch(err=>{console.log(err)});
 
         res.status(201).json({insertedProjects})
     }

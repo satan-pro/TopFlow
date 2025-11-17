@@ -16,6 +16,7 @@ const verifyJWT = (req, res, next) => {
             console.log(`Decoded at verifyJWT:`);
             console.log(decoded);
             req.user = decoded.id;
+            req.accessToken = decoded.githubAccessToken;
             next();
         }
     );

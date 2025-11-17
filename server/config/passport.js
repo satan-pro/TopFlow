@@ -26,6 +26,7 @@ passport.use(new GitHubStrategy({
                     avatar_url: profile.photos[0]?.value || "",
                 },
                 refreshToken: refreshToken || "",
+                accessToken: accessToken || "",
             });
 
             await user.save();
@@ -37,31 +38,32 @@ passport.use(new GitHubStrategy({
             user.profile.bio = profile._json.bio || user.profile.bio;
             user.profile.avatar_url = profile.photos[0]?.value || user.profile.avatar_url;
             user.refreshToken = refreshToken || user.refreshToken;
+            user.accessToken = accessToken || user.accessToken;
   
             await user.save();
           }
 
-        return done(null, {id: profile.id, username: profile.username});
+        return done(null, {id: profile.id, username: profile.username, accessToken: accessToken});
     }
     catch(err) {
-        return done(err, {id: profile.id, username: profile.username});
+        return done(err, null);
     }
   }
 ));
 
 // Add the user's GitHub Id to the express-session
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, {id: user.id, accessToken: user.accessToken});
 });
 
 // Whenever user data is retrieved from the session this is used
 // It finds the user details from the database by querying the user id
-passport.deserializeUser(async function(id, done) {
+passport.deserializeUser(async function(obj, done) {
     try {
-        const user = await User.findOne({githubId: id});
+        const user = await User.findOne({githubId: obj.id});
 
         if(user) {
-            done(null, user);
+            done(null, {...user.toObject(), accessToken: obj.accessToken});
         }
         else {
             done(null, false);

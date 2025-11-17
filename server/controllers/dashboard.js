@@ -7,8 +7,6 @@ async function handleGetDashboard(req, res) {
     const userGithubId = req.user;
 
     const userDetails = await user.findOne({githubId: userGithubId});
-
-    console.log(userDetails);
     
     if(userDetails) {
         const importRepos = await axios.get(`http://localhost:5000/github/repos`, {withCredentials: true, 
