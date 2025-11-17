@@ -1,7 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 export default function ProjectCard({ project }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/projects/${project._id}`);
+  };
+
   return (
-    <div className="flex justify-between items-center p-4 my-4 bg-white rounded-lg shadow-md hover:shadow-lg duration-200"
-    onClick={()=>{window.open(project.details.projectUrl)}}>
+    <div className="flex justify-between items-center p-4 my-4 bg-white rounded-lg shadow-md hover:shadow-lg duration-200 cursor-pointer"
+    onClick={handleClick}>
       <div className="flex items-center gap-x-4">
         <div className="w-12 h-12 bg-gray-200 rounded-lg"></div>
         <div>

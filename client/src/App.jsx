@@ -6,6 +6,7 @@ import Jamming from "./pages/Jamming";
 import Login from "./pages/Login";
 import Messages from "./pages/Messages";
 import Projects from "./pages/Projects";
+import ProjectPage from "./pages/ProjectPage";
 import Schedule from "./pages/Schedule";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:projectId" element={<ProjectPage />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/login" element={<Login />} />

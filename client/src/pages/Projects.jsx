@@ -22,7 +22,7 @@ export default function Projects() {
       <h1 className="text-2xl font-bold m-2">Your Projects</h1>
       <Searchbar />
       <div className="p-4">
-        {projects.map((project) => (<ProjectCard project={project} />))}
+        {projects.map((project) => (<ProjectCard key={project._id} project={project} />))}
       </div>
     </div>
   );
