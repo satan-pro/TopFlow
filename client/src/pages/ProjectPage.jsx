@@ -6,6 +6,7 @@ export default function ProjectPage() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
+  const [projectMembers, setProjectMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,6 +14,7 @@ export default function ProjectPage() {
     axios.get(`http://localhost:5000/projects/${projectId}`, { withCredentials: true })
       .then((response) => {
         setProject(response.data.project);
+        setProjectMembers(response.data.project.members);
         setLoading(false);
       })
       .catch(err => {
@@ -21,13 +23,6 @@ export default function ProjectPage() {
         setLoading(false);
       });
   }, [projectId]);
-
-  // Hardcoded data for sections not available in API
-  const hardcodedMembers = [
-    { name: "Sayantan Paul", email: "sayantan@example.com" },
-    { name: "Aisha Khan", email: "aisha@example.com" },
-    { name: "Liam Smith", email: "liam@example.com" },
-  ];
 
   const hardcodedTasks = [
     { id: 1, title: "Design new header", status: "In Progress", assignee: "Sayantan" },
@@ -166,11 +161,21 @@ export default function ProjectPage() {
         <div className="w-96 bg-white rounded-lg shadow-md p-6 ring ring-zinc-300/50">
           <h2 className="text-xl font-semibold mb-4">Team Members</h2>
           <ul className="space-y-3">
-            {hardcodedMembers.map((m, idx) => (
+            {projectMembers.map((m, idx) => (
               <li key={idx} className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">{m.name.split(' ').map(n=>n[0]).slice(0,2).join('')}</div>
+                {m.profile.avatar_url ? (
+                  <img
+                    src={m.profile.avatar_url}
+                    alt={m.profile.name}
+                    className="w-10 h-10 rounded-full object-cover bg-gray-300"
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                    {m.profile.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                  </div>
+                )}
                 <div>
-                  <div className="font-medium">{m.name}</div>
+                  <div className="font-medium">{m.profile.name}</div>
                   <div className="text-sm text-gray-500">{m.email}</div>
                 </div>
               </li>

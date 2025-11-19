@@ -14,6 +14,7 @@ const projectSchema = new Schema({
         forks: Number,
         language: String,
     },
+    members: [{ type: String, ref: 'User', localField: 'members', foreignField: 'username' }],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     pushed_at: {type: Date, default: Date.now},

@@ -1,7 +1,6 @@
 const passport  = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 const User = require('../models/User');
-require('dotenv').config();
 
 // User logs in through GitHub Oauth using this function
 passport.use(new GitHubStrategy({
